@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('send_css', filename='questions_list.css') }}">
+{% endblock %}
+
+{% block title %}Questions{% endblock %}
+
+{% block body %}
+<body>
+	<div class="row wrapper border-bottom white-bg page-heading">
+		<div class="row wrapper border-bottom white-bg page-heading">
+			<div class="row col-md-10 col-md-offset-1 hide-me" id="question_form_div">
+				<form id="question_form">
+					<div class="col-md-10">
+						<label>Question Text</label>
+						<input type="text" name="question_text" class="form-control form-box new">
+					</div>
+					<div class="pull-right col-md-2">
+						<a href="" id="addChoice">add choice</a>
+					</div>
+					<div class="col-md-3 choiceDiv" id="choiceDiv">
+						<label>Choice 1</label>
+						<input type="text" name="choice_text" class="form-control form-box new">
+					</div>
+				</form>
+			</div>
+			<div class="col-md-2 pull-right">
+				<button class="btn btn-success" id="showForm">Add</button>
+				<button class="btn btn-success hide-me" id="submitForm">Submit</button>
+			</div>
+			<div class="col-md-10 col-md-offset-1">
+				<h2>Questions</h2>
+				<section>
+
+					<input class="animate" type="radio" name="question" id="q1"/>
+					<label class="animate" for="q1">Q: What is Lorem Ipsum?</label>
+					<ul class="response animate">
+						<li>Choice</li>
+						<li>Choice</li>
+						<li>Choice</li>
+					</ul>
+
+				</section>
+			</div>
+		</div>
+
+	</div>
+	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+	<script src="{{ url_for('send_js', filename='questions_list.js') }}"></script>
+</body>
+{% endblock %}

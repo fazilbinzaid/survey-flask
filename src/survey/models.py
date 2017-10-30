@@ -11,6 +11,11 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String())
 
+    def __init__(self, **kwargs):
+        for key, value in kwargs.items():
+            if not key == "id":
+                setattr(self, key, value)
+
 
 class Choice(db.Model):
     """
@@ -20,3 +25,7 @@ class Choice(db.Model):
     question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
     text = db.Column(db.String())
 
+    def __init__(self, *args, **kwargs):
+        for key, value in kwargs.items():
+            if not key == "id":
+                setattr(self, key, value)
