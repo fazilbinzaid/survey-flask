@@ -1,7 +1,7 @@
 $(function() {
 
-  var BASE_URL = "http://localhost:5000/api/"
-  // var $div = $('<div><h1>Hello</h1></div>').appendTo('body');
+  // var BASE_URL = "http://localhost:5000/api/"
+  var BASE_URL = "https://test-survey-flask.herokuapp.com/api/";
 
   $.ajax({
     url: BASE_URL + "questions",

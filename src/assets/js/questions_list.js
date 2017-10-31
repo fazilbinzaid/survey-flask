@@ -1,6 +1,7 @@
 $(function() {
 
-	var BASE_URL = "http://localhost:5000/api/admin/";
+	// var BASE_URL = "http://localhost:5000/api/admin/";
+	var BASE_URL = "https://test-survey-flask.herokuapp.com/api/admin/";
 
 	$("#addChoice").on("click", function(e) {
 		e.preventDefault();
