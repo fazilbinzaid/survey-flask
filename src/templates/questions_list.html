@@ -52,7 +52,8 @@ document.write('<style>#chat_box{position: fixed;bottom: 0px;right: 40px;width: 
 							<ul id="viewChoices">
 								{% for choice in question.choices %}
 								<ul>
-									<li>{{ choice.text }}</li><br>
+									<li>{{ choice.text }} ({% if choice.count %} {{ choice.count }} {% else %} 0 {% endif %})</li>
+									<br>
 								</ul>
 								{% endfor %}
 							</ul>

@@ -46,9 +46,13 @@ $(function() {
 
 	$("#editChoicesButton").on("click", function(e) {
 		e.preventDefault();
-		$("#viewChoices").fadeOut();
-		$("#editChoices").fadeIn();
+		toggleFade();
 	});
+
+	function toggleFade() {
+		$("#viewChoices").fadeToggle();
+		$("#editChoices").fadeToggle();
+	}
 
 	$("#saveChoices").on("click", function(e) {
 		e.preventDefault();
@@ -63,6 +67,7 @@ $(function() {
 			dataType: "json",
 			success: function(response) {
 				console.log("edit response", response);
+				toggleFade();
 			}
 		});
 	});
