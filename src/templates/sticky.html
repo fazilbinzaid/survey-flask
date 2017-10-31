@@ -5,18 +5,20 @@
 	<link rel="stylesheet" href="{{ url_for('send_css', filename='sticky.css') }}"></link>
 	<title>Survey</title>
 </head>
-<body>
+<body style="overflow-x: hidden; overflow-y: hidden;">
 	<div id="page-wrap">
 
-		<h1>Final Quiz for Lip building</h1>
+		<h1 class="text-center">SURVEY</h1>
 
 		<form id="quiz">
 
-			<ol id="orderedList">
+			<div class="form-group">
+				<ol id="orderedList"></ol>
+			</div>
 
-			</ol>
-
-			<input type="submit" class="btn btn-success" value="Submit Quiz" />
+			<div class="form-group">
+				<button type="submit" class="btn btn-success" style="cursor: pointer;">Submit</button>
+			</div>
 
 		</form>
 

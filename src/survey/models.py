@@ -29,3 +29,17 @@ class Choice(db.Model):
         for key, value in kwargs.items():
             if not key == "id":
                 setattr(self, key, value)
+
+
+class Selection(db.Model):
+    """
+    Table for storing Selections.
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id'))
+    choice_id = db.Column(db.Integer, db.ForeignKey('choice.id'))
+
+    def __init__(self, *args, **kwargs):
+        for key, value in kwargs.items():
+            if not key == "id":
+                setattr(self, key, value)
