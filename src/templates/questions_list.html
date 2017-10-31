@@ -2,51 +2,84 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('send_css', filename='questions_list.css') }}">
+<link rel="stylesheet" href="{{ url_for('send_css', filename='orbit.css') }}">
 {% endblock %}
 
 {% block title %}Questions{% endblock %}
 
-{% block body %}
-<body>
-	<div class="row wrapper border-bottom white-bg page-heading">
-		<div class="row wrapper border-bottom white-bg page-heading">
-			<div class="row col-md-10 col-md-offset-1 hide-me" id="question_form_div">
-				<form id="question_form">
-					<div class="col-md-10">
-						<label>Question Text</label>
-						<input type="text" name="question_text" class="form-control form-box new">
+{% block content %}
+	<div class="page-wrapper">
+		<div class="col-md-3">
+			<section class="cd-faq">
+				<div class="container-fluid">
+					<form action="" id="addQuestion">
+						<div class="form-group">
+							<label>Question</label>
+							<textarea rows="4" cols="50" name="question_text"></textarea>
+						</div>
+						<div class="form-group">
+							<label>Choice</label>
+							<input type="text" class="form-control form-box" name="choice_list">
+						</div>
+						<div class="form-group">
+							<label>Choice</label>
+							<input type="text" class="form-control form-box" name="choice_list">
+						</div>
+					</form>
+					<div class="form-group">
+						<a class="pull-right" href="" id="addChoice">Add</a>
+						<button class="btn btn-sm btn-success" id="submitForm">Submit</button>
 					</div>
-					<div class="pull-right col-md-2">
-						<a href="" id="addChoice">add choice</a>
-					</div>
-					<div class="col-md-3 choiceDiv" id="choiceDiv">
-						<label>Choice 1</label>
-						<input type="text" name="choice_text" class="form-control form-box new">
-					</div>
-				</form>
-			</div>
-			<div class="col-md-2 pull-right">
-				<button class="btn btn-success" id="showForm">Add</button>
-				<button class="btn btn-success hide-me" id="submitForm">Submit</button>
-			</div>
-			<div class="col-md-10 col-md-offset-1">
-				<h2>Questions</h2>
-				<section>
-
-					<input class="animate" type="radio" name="question" id="q1"/>
-					<label class="animate" for="q1">Q: What is Lorem Ipsum?</label>
-					<ul class="response animate">
-						<li>Choice</li>
-						<li>Choice</li>
-						<li>Choice</li>
-					</ul>
-
-				</section>
-			</div>
+				</div>
+			</section>
 		</div>
+		<div class="col-md-9">
+			<section class="cd-faq">
+				<div class="cd-faq-items">
 
+					<ul id="basics" class="cd-faq-group">
+						<li class="cd-faq-title"><h2>Questions</h2></li>
+
+						{% for question in questions %}
+
+						<li>
+							<a class="cd-faq-trigger" href="#0">{{ question.text }}</a>
+							<div class="cd-faq-content">
+								<a href="#" class="pull-right" id="editChoicesButton">Edit</a>
+								<ul id="viewChoices">
+									{% for choice in question.choices %}
+									<ul>
+										<li>{{ choice.text }}</li><br>
+									</ul>
+									{% endfor %}
+								</ul>
+								<ul id="editChoices" style="display: none;"><br><br>
+									<form id="editChoiceForm">
+										{% for choice in question.choices %}
+										<ul>
+											<li>
+												<div class="form-group">
+													<input type="text" class="form-control form-box" name="{{choice.id}}" value="{{choice.text}}">
+												</div>
+											</li><br>
+										</ul>
+										{% endfor %}
+										<button class="btn btn-success pull-right" id="saveChoices">Save</button>
+									</form>
+								</ul>
+								<br>
+							</div> <!-- cd-faq-content -->
+						</li>
+
+						{% endfor %}
+
+					</ul>
+				</div>
+			</section>
+		</div>
 	</div>
-	<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+{% endblock %}
+
+{% block footer %}
 	<script src="{{ url_for('send_js', filename='questions_list.js') }}"></script>
-</body>
 {% endblock %}

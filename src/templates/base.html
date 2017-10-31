@@ -5,10 +5,11 @@
   <!-- <script src="{{ url_for('send_bundle', filename='bundle.js') }}"></script> -->
   <script src="{{ url_for('send_node_modules', filename='jquery/dist/jquery.min.js') }}"></script>
   <link rel="stylesheet" href="{{ url_for('send_node_modules', filename='bootstrap/dist/css/bootstrap.min.css') }}"></link>
+  <link rel="stylesheet" href="{{ url_for('send_css', filename='reset.css') }}"></link>
+  <link rel="stylesheet" href="{{ url_for('send_css', filename='style.css') }}"></link>
   {% block head %}{% endblock %}
   <title>{% block title %}Flask{% endblock %}</title>
 </head>
-{% block body %}
 <body>
   <div id="content">{% block content %}{% endblock %}</div>
   <div id="footer">
@@ -17,6 +18,9 @@
     {% endblock %}
   </div>
   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+  <!-- <script src="{{ url_for('send_js', filename='jquery-2.1.1.js') }}"></script> -->
+  <!-- <script src="{{ url_for('send_js', filename='jquery.mobile.custom.min.js') }}"></script> -->
+  <script src="{{ url_for('send_js', filename='main.js') }}"></script>
+  <script src="{{ url_for('send_js', filename='modernizr.js') }}"></script>
 </body>
-{% endblock %}
 </html>

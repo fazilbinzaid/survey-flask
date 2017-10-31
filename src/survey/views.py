@@ -8,15 +8,6 @@ from src.auth.decorators import requires_auth, check_auth
 from .models import *
 
 
-@app.route("/api/questions/")
-def list_questions():
-    """
-    View for listing all the questions.
-    """
-    questions = Question.query.all()
-    return jsonify(questions)
-
-
 @app.route('/css/<string:filename>/')
 def send_css(filename):
     return send_from_directory('assets/css', filename)
@@ -48,7 +39,9 @@ def login():
 @app.route("/api/admin/questions/", methods=['GET'])
 def questions_list():
     questions = Question.query.all()
-    return render_template("questions_list.html", questions=questions)
+    for question in questions:
+        question.choices = Choice.query.filter_by(question_id=question.id)
+    return render_template("questions_list.html", questions=reversed(questions))
 
 
 @app.route("/api/admin/create_question/", methods=['POST'])
@@ -58,10 +51,48 @@ def create_question():
     question = Question(text=question_text)
     db.session.add(question)
     db.session.commit()
-    for choice_text in choice_list:
+    for choice_text in choices:
         db.session.add(Choice(question_id=question.id, text=choice_text))
     db.session.commit()
     return jsonify({"success": True, "message": "Database updated."})
+
+
+@app.route("/api/admin/edit_choices/", methods=['POST'])
+def edit_choices():
+    choice_list = request.json.items()
+    for choice_id, value in choice_list:
+        choice = Choice.query.get(int(choice_id))
+        choice.text = value
+    db.session.commit()
+    return jsonify({"success": True, "message": "Database updated."})
+
+
+@app.route("/api/survey/", methods=['POST'])
+def survey():
+    return jsonify({})
+
+@app.route("/api/questions/", methods=['GET'])
+def list_all_questions():
+    questions = Question.query.all()
+    response = []
+    for question in questions:
+        response.append({
+            'question': {
+                'id': question.id,
+                'text': question.text
+            },
+            'choices': [{
+                'id': choice.id,
+                'text': choice.text
+            } for choice in Choice.query.filter_by(question_id=question.id)]
+        })
+    return jsonify({ 'data': response })
+
+@app.route("/api/make_selections/", methods=['GET', 'POST'])
+def make_selections():
+    if not request.method == "POST":
+        return render_template("sticky.html")
+
 
 
 

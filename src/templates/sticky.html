@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+	<link rel="stylesheet" href="{{ url_for('send_css', filename='sticky.css') }}"></link>
+	<title>Survey</title>
+</head>
+<body>
+	<div id="page-wrap">
+
+		<h1>Final Quiz for Lip building</h1>
+
+		<form id="quiz">
+
+			<ol id="orderedList">
+
+			</ol>
+
+			<input type="submit" class="btn btn-success" value="Submit Quiz" />
+
+		</form>
+
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="{{ url_for('send_js', filename='script.js') }}"></script>
+</body>
+</html>
