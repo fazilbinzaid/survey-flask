@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 # custom imports
@@ -17,4 +17,4 @@ from src.survey import *
 
 @app.route('/')
 def hello():
-    return "Hello World"
+    return redirect(url_for('login'))
