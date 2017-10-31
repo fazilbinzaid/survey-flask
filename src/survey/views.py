@@ -39,9 +39,21 @@ def login():
 @app.route("/api/admin/questions/", methods=['GET'])
 def questions_list():
     questions = Question.query.all()
+    response_array = []
     for question in questions:
-        question.choices = Choice.query.filter_by(question_id=question.id)
-    return render_template("questions_list.html", questions=reversed(questions))
+        choice_array = []
+        for choice in Choice.query.filter_by(question_id=question.id):
+            choice_array.append({
+                    'id': choice.id,
+                    'text': choice.text,
+                    'count': Selection.query.filter_by(question_id=question.id, choice_id=choice.id).count()
+                })
+        response_array.append({
+                'id': question.id,
+                'text': question.text,
+                'choices': choice_array
+            })
+    return render_template("questions_list.html", questions=reversed(response_array))
 
 
 @app.route("/api/admin/create_question/", methods=['POST'])
@@ -103,6 +115,10 @@ def make_selections():
 def code_view():
     return jsonify('''document.write('<style>#chat_box{position: fixed;bottom: 0px;right: 40px;width: 350px;border-right: 1px solid #ccc;border-left: 1px solid #ccc;border-radius: 5px 5px 0 0;box-sizing: border-box;z-index: 9999;}#chat_box_head , #chat_box_body{width: 350px;cursor: pointer;}#chat_box_head{background-color: #c00;color: white;padding: 10px;border-radius: 5px 5px 0 0;}#chat_box_body{height: 0;}.height{height: 300px!important;}iframe{height:290px;border: 0;}.chat_div_class{height: 300px;overflow-y: scroll;overflow-x: hidden;}</style><div id="chat_box" onclick="toggle()"><div id="chat_box_head">Survey</div><div id="chat_box_body"><iframe src="http://localhost:5000/api/make_selections/" width="98%" ></iframe></div></div><script>function toggle(){var element=document.getElementById("chat_box");element.classList.toggle("chat_div_class");}<\/script>');'''
         )
+
+# @app.route("/api/admin/reports/", methods=['GET'])
+# def show_reports():
+
 
 
 
