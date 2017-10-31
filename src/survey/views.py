@@ -1,5 +1,5 @@
 import os
-from flask import jsonify, render_template, request, redirect, url_for, send_from_directory
+from flask import jsonify, render_template, request, redirect, url_for, send_from_directory, session
 from flask.views import MethodView
 
 # custom imports
@@ -32,11 +32,20 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         if check_auth(username, password):
+            session['logged_in'] = True
             return redirect(url_for('questions_list'))
+        session['logged_in'] = False
         context = { 'message': 'Invalid Credentials' }
     return render_template("login.html", **context)
 
+@app.route("/api/logout/", methods=['GET'])
+@requires_auth
+def logout():
+    session['logged_in'] = False
+    return redirect(url_for('login'))
+
 @app.route("/api/admin/questions/", methods=['GET'])
+@requires_auth
 def questions_list():
     questions = Question.query.all()
     response_array = []

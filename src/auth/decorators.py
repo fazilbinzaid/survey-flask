@@ -1,6 +1,6 @@
 from functools import wraps
 
-from flask import request, Response
+from flask import request, Response, session
 
 
 def check_auth(username, password):
@@ -19,6 +19,9 @@ def unauthenticate():
         'You have to login with proper credentials''', 401,
         {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
+def check_logged_in():
+    return session.get('logged_in')
+
 def requires_auth(fun):
     """
     Auth decorator.
@@ -26,7 +29,7 @@ def requires_auth(fun):
     @wraps(fun)
     def decorated(*args, **kwargs):
         auth = request.authorization
-        if not auth or not check_auth(auth.username, auth.password):
+        if not auth and not check_logged_in():
             return unauthenticate()
         return fun(*args, **kwargs)
     return decorated
