@@ -21,6 +21,7 @@ class ProductionConfig(Config):
     Production configuration.
     """
     DEBUG = False
+    SQLALCHEMY_DATATBASE_URI = os.environ['DATABASE_URL']
 
 
 class DevelopmentConfig(Config):
